@@ -1,8 +1,6 @@
 package com.akribase.archycards
 
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -31,11 +29,6 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         rvState.observe(this) {
-            binding.frame.imageTintList = ColorStateList.valueOf(
-                getColor(
-                    if (it.isLongPressed || it.progress > 0.5) R.color.grey else R.color.primary
-                )
-            )
 
             binding.tvDragDown.apply {
                 setTextColor(getColor(if (!it.isLongPressed) R.color.grey else R.color.primary))
@@ -78,34 +71,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRv(rv: RecyclerView) {
         val rewards = listOf(R.drawable.reward1, R.drawable.reward2, R.drawable.reward3)
-
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        val rvHeight = resources.getDimension(R.dimen.recyclerview_height).toInt()
-        val pad = resources.getDimension(R.dimen.item_spacing).toInt()
-        val selectBoxPadFraction = 0.5f
-        val selectBoxPad = (selectBoxPadFraction * pad).toInt()
-        val extraPad = pad - selectBoxPad
-        val viewWidth = screenWidth / 2
-        val viewHeight = (1.25f * viewWidth).toInt()
-
-        val effViewWidth = viewWidth - 2 * extraPad
-        val effViewHeight = viewHeight - 2 * extraPad
-        val viewScaleFactor = effViewWidth.toFloat() / (effViewWidth - 2 * selectBoxPad)
+        val viewWidth = screenWidth / 4
+        val viewHeight = viewWidth
 
         rv.adapter = RewardsAdapter(rewards, rvState, viewWidth, viewHeight)
         rv.layoutManager = ArcLayoutManager(resources, screenWidth, viewWidth, viewHeight).apply {
             layoutManager = this
         }
 
-        (binding.frame.layoutParams as ConstraintLayout.LayoutParams).apply {
-            width = effViewWidth
-            height = effViewHeight
-            topMargin = rvHeight + extraPad
-        }
-
-        binding.glowView.layoutParams.apply {
-            width = effViewWidth
-        }
 
         snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(rv)
@@ -115,13 +89,6 @@ class MainActivity : AppCompatActivity() {
         snapOnScrollListener.snapPosition.observe(this) {
             rvState.apply { value = value?.copy(snapPosition = it) }
         }
-
-        ItemDragDownHelper(
-            this,
-            rvState,
-            0.5f,
-            viewScaleFactor
-        ).attachToRv(rv)
     }
 
     override fun onResume() {

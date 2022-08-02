@@ -18,7 +18,12 @@ class ArcLayoutManager(
     private val viewHeight: Double,
 ) : RecyclerView.LayoutManager() {
 
-    private var horizontalScrollOffset = viewWidth
+    init {
+        Log.d("UNUN", "ScreenWidth : $screenWidth viewWIdth: $viewWidth ViewHeight : $viewHeight")
+        Log.d("UNUN", "======>>======")
+    }
+
+    private var horizontalScrollOffset = viewWidth / 2
     var scrollEnabled = true
 
     private val recyclerViewHeight =
@@ -39,6 +44,9 @@ class ArcLayoutManager(
             floor(horizontalScrollOffset / viewWidth).toInt()
         val lastVisiblePosition = ((horizontalScrollOffset + screenWidth) / viewWidth).toInt()
 
+        Log.d("UNUN", "FVP : $firstVisiblePosition LVP: $lastVisiblePosition")
+        Log.d("UNUN", "======>>======")
+
         for (index in firstVisiblePosition..lastVisiblePosition) {
             var recyclerIndex = index % itemCount
             if (recyclerIndex < 0) {
@@ -48,7 +56,8 @@ class ArcLayoutManager(
             addView(view)
 
             layoutChildView(index, viewWidth, view)
-
+            Log.d("UNUN", "layoutChildView Index : $recyclerIndex")
+            Log.d("UNUN", "======>>======")
         }
 
         // Remove scrap views
@@ -70,6 +79,11 @@ class ArcLayoutManager(
         val alpha = acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
         val yComponent = radius - (radius * sin(alpha))
 
+        Log.d(
+            "UNUN",
+            "Raidus $radius, cosAlpha : $cosAlpha, alpha $alpha, yComponent $yComponent  "
+        )
+        Log.d("UNUN", "======>>======")
         val top = (h + yComponent - recyclerViewHeight).toInt()
         val bottom = viewHeight + recyclerViewHeight
 
@@ -80,8 +94,9 @@ class ArcLayoutManager(
 
         Log.d(
             "UNUN",
-            "YComponent $yComponent Top: $top Bottom : $bottom Right : $right Left : $left, ViewWidth  ${viewWidth}, ViewHeight $viewHeight"
+            "Top: $top Bottom : $bottom Right : $right Left : $left, s  ${s}, h $h, viewCenterX : $viewCentreX"
         )
+        Log.d("UNUN", "======>>======")
     }
 
     override fun canScrollHorizontally() = scrollEnabled

@@ -6,6 +6,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.akribase.archycards.arc.ArcControl
 import com.akribase.archycards.databinding.ActivityMainBinding
 
 
@@ -40,11 +41,9 @@ class MainActivity : AppCompatActivity() {
             R.drawable.p2,
             R.drawable.p3,
         )
-        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        rv.layoutManager =
-            ArcLayoutManager(resources, screenWidth, screenWidth / 3.4, screenWidth / 3.4).apply {
-                layoutManager = this
-            }
+
+//        setArcLayoutManager()
+        setArcLayoutManager2()
         rv.adapter = RewardsAdapter(rewards)
 
         snapHelper = LinearSnapHelper()
@@ -55,8 +54,23 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnScroll.setOnClickListener {
-            rv.smoothScrollBy(10000, 0, AccelerateDecelerateInterpolator(), 10000)
+            rv.smoothScrollBy(10000, 0, AccelerateDecelerateInterpolator(), 7000)
         }
+    }
+
+    fun setArcLayoutManager() {
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        binding.rv.layoutManager =
+            ArcLayoutManager(resources, screenWidth, screenWidth / 3.4, screenWidth / 3.4).apply {
+                layoutManager = this
+            }
+    }
+
+    fun setArcLayoutManager2() {
+        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        val arcControl = ArcControl(screenWidth - 500, 30f, 0f, 30f, -360, 360)
+        val arcLayoutManager = com.akribase.archycards.arc.ArcLayoutManager(arcControl)
+        binding.rv.layoutManager = arcLayoutManager
     }
 
     override fun onResume() {

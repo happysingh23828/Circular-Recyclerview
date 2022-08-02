@@ -2,6 +2,7 @@ package com.akribase.archycards
 
 import android.content.res.Resources
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -74,13 +75,18 @@ class ArcLayoutManager(
         val alpha = acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
         val yComponent = radius - (radius * sin(alpha))
 
-        val top = (h + yComponent).toInt()
-        val bottom = top + viewHeight
+        val top = (h + yComponent - recyclerViewHeight).toInt()
+        val bottom = viewHeight + recyclerViewHeight
 
         // Measure
         measureChild(view, viewWidth, viewHeight + 200)
         // Layout
-        layoutDecorated(view, left, top, right, bottom)
+        layoutDecorated(view, left, top, right, bottom.toInt())
+
+        Log.d(
+            "UNUN",
+            "YComponent $yComponent Top: $top Bottom : $bottom Right : $right Left : $left, ViewWidth  ${viewWidth}, ViewHeight $viewHeight"
+        )
     }
 
     override fun canScrollHorizontally() = scrollEnabled

@@ -41,12 +41,11 @@ class MainActivity : AppCompatActivity() {
             R.drawable.p3,
         )
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        rv.adapter = RewardsAdapter(rewards)
         rv.layoutManager =
-            ArcLayoutManager(resources, screenWidth, screenWidth / 4, screenWidth / 4).apply {
+            ArcLayoutManager(resources, screenWidth, screenWidth / 3.4, screenWidth / 3.4).apply {
                 layoutManager = this
             }
-
+        rv.adapter = RewardsAdapter(rewards)
 
         snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(rv)

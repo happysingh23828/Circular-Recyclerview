@@ -14,8 +14,8 @@ import kotlin.math.sin
 class ArcLayoutManager(
     resources: Resources,
     private val screenWidth: Int,
-    private val viewWidth: Int,
-    private val viewHeight: Int,
+    private val viewWidth: Double,
+    private val viewHeight: Double,
 ) : RecyclerView.LayoutManager() {
 
     private var horizontalScrollOffset = viewWidth
@@ -36,8 +36,8 @@ class ArcLayoutManager(
 
         // Looping
         val firstVisiblePosition =
-            floor(horizontalScrollOffset.toDouble() / viewWidth.toDouble()).toInt()
-        val lastVisiblePosition = (horizontalScrollOffset + screenWidth) / viewWidth
+            floor(horizontalScrollOffset / viewWidth).toInt()
+        val lastVisiblePosition = ((horizontalScrollOffset + screenWidth) / viewWidth).toInt()
 
         for (index in firstVisiblePosition..lastVisiblePosition) {
             var recyclerIndex = index % itemCount
@@ -58,7 +58,7 @@ class ArcLayoutManager(
         }
     }
 
-    private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View) {
+    private fun layoutChildView(i: Int, viewWidthWithSpacing: Double, view: View) {
         val left = i * viewWidthWithSpacing - horizontalScrollOffset
         val right = left + viewWidth
 
@@ -74,10 +74,9 @@ class ArcLayoutManager(
         val bottom = viewHeight + recyclerViewHeight
 
         // Measure
-        measureChild(view, viewWidth, viewHeight + 200)
+        measureChild(view, viewWidth.toInt(), (viewHeight + 200).toInt())
         // Layout
-        layoutDecorated(view, left, top, right, bottom.toInt())
-
+        layoutDecorated(view, left.toInt(), top, right.toInt(), bottom.toInt())
 
         Log.d(
             "UNUN",

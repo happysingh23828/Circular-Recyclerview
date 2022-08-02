@@ -12,25 +12,15 @@ import com.akribase.archycards.databinding.ItemViewBinding
 
 class RewardsAdapter(
     private val rewards: List<Int>,
-    val rvState: MutableLiveData<RvState>,
     val itemWidth: Int,
     val itemHeight: Int
-): RecyclerView.Adapter<RewardsAdapter.RewardsHolder>() {
+) : RecyclerView.Adapter<RewardsAdapter.RewardsHolder>() {
 
     @SuppressLint("ClickableViewAccessibility")
     inner class RewardsHolder(private val binding: ItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var isLongClicked = false
 
         init {
-
-            binding.root.layoutParams = binding.root.layoutParams.apply {
-                width = itemWidth
-                height = itemHeight
-            }
-
-
-
         }
 
         fun bind(id: Int) {

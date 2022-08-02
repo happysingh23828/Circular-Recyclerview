@@ -20,9 +20,9 @@ class ArcLayoutManager(
     private val screenWidth: Int,
     private val viewWidth: Int,
     private val viewHeight: Int,
-):RecyclerView.LayoutManager() {
+) : RecyclerView.LayoutManager() {
 
-    private var horizontalScrollOffset = viewWidth / 2
+    private var horizontalScrollOffset = viewWidth
     var scrollEnabled = true
 
     private val recyclerViewHeight =
@@ -53,15 +53,6 @@ class ArcLayoutManager(
 
             layoutChildView(index, viewWidth, view)
 
-//            if (recyclerIndex == itemCount/2) {
-//                val target = LayoutInflater.from(view.context).inflate(R.layout.item_view, null)
-//
-//                target.apply {
-//                    layoutParams = RecyclerView.LayoutParams(viewWidth, viewHeight)
-//                    setBackgroundColor(Color.BLUE)
-//                }
-//                layoutTarget(recyclerIndex, viewWidth, view)
-//            }
         }
 
         // Remove scrap views
@@ -69,24 +60,6 @@ class ArcLayoutManager(
         scrapListCopy.forEach {
             recycler.recycleView(it.itemView)
         }
-    }
-
-    private fun layoutTarget(i: Int, viewWidthWithSpacing: Int, view: View) {
-        val targetWidth = viewWidth
-        val targetHeight = viewHeight
-        val dw = viewWidth - targetWidth
-
-        val viewLeft = i * viewWidthWithSpacing - horizontalScrollOffset
-        val left = viewLeft + dw/2
-        val right = left + targetWidth
-
-        val top = height - targetHeight
-        val bottom = top + targetHeight
-
-        // Measure
-        measureChild(view, targetWidth, targetHeight)
-        // Layout
-        layoutDecorated(view, left, top, right, bottom)
     }
 
     private fun layoutChildView(i: Int, viewWidthWithSpacing: Int, view: View) {
@@ -101,11 +74,8 @@ class ArcLayoutManager(
         val alpha = acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
         val yComponent = radius - (radius * sin(alpha))
 
-        val top = (h - yComponent).toInt()
+        val top = (h + yComponent).toInt()
         val bottom = top + viewHeight
-
-        // View Rotation
-        view.rotation = 90f - (alpha * (180 / PI)).toFloat()
 
         // Measure
         measureChild(view, viewWidth, viewHeight + 200)

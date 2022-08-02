@@ -1,12 +1,10 @@
 package com.akribase.archycards
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.content.res.ColorStateList
 import android.view.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.akribase.archycards.databinding.ItemViewBinding
 
@@ -21,6 +19,12 @@ class RewardsAdapter(
         fun bind(id: Int) {
             binding.imageView.setImageDrawable(ContextCompat.getDrawable(itemView.context, id))
             binding.imageView.setCircleBackgroundColorResource(getCircleBorderColor())
+            binding.position.backgroundTintList = ColorStateList.valueOf(getCircleBorderColor())
+            binding.position.text = adapterPosition.toString()
+            binding.root.setOnClickListener {
+                Toast.makeText(binding.root.context, "$adapterPosition", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         private fun getCircleBorderColor(): Int {

@@ -2,11 +2,12 @@ package com.akribase.archycards
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.akribase.archycards.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var snapHelper: LinearSnapHelper
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initRv(binding.rv)
     }
 
@@ -51,6 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         val snapOnScrollListener = SnapOnScrollListener(snapHelper)
         rv.addOnScrollListener(snapOnScrollListener)
+
+
+        binding.btnScroll.setOnClickListener {
+            rv.smoothScrollBy(10000, 0, AccelerateDecelerateInterpolator(), 10000)
+        }
     }
 
     override fun onResume() {

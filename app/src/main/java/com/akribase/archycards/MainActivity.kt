@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
             R.drawable.p3,
         )
 
-//        setArcLayoutManager()
-        setArcLayoutManager2()
+        setArcLayoutManager()
+//        setArcLayoutManager2()
         rv.adapter = RewardsAdapter(rewards)
 
         snapHelper = LinearSnapHelper()

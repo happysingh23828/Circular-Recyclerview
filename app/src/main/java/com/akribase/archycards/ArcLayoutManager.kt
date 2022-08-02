@@ -1,6 +1,7 @@
 package com.akribase.archycards
 
 import android.content.res.Resources
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.math.MathUtils
@@ -76,6 +77,12 @@ class ArcLayoutManager(
         measureChild(view, viewWidth, viewHeight + 200)
         // Layout
         layoutDecorated(view, left, top, right, bottom.toInt())
+
+
+        Log.d(
+            "UNUN",
+            "YComponent $yComponent Top: $top Bottom : $bottom Right : $right Left : $left, ViewWidth  ${viewWidth}, ViewHeight $viewHeight"
+        )
     }
 
     override fun canScrollHorizontally() = scrollEnabled

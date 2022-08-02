@@ -21,36 +21,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRv(rv: RecyclerView) {
         val rewards = listOf(
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3,
-            R.drawable.reward1,
-            R.drawable.reward2,
-            R.drawable.reward3
+            R.drawable.p0,
+            R.drawable.p1,
+            R.drawable.p2,
+            R.drawable.p3,
+            R.drawable.p0,
+            R.drawable.p1,
+            R.drawable.p2,
+            R.drawable.p3,
+            R.drawable.p0,
+            R.drawable.p1,
+            R.drawable.p2,
+            R.drawable.p3,
+            R.drawable.p0,
+            R.drawable.p1,
+            R.drawable.p2,
+            R.drawable.p3,
         )
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        val viewWidth = screenWidth / 4
-        val viewHeight = viewWidth
-
-        rv.adapter = RewardsAdapter(rewards, viewWidth, viewHeight)
-        rv.layoutManager = ArcLayoutManager(resources, screenWidth, viewWidth, viewHeight).apply {
-            layoutManager = this
-        }
+        rv.adapter = RewardsAdapter(rewards)
+        rv.layoutManager =
+            ArcLayoutManager(resources, screenWidth, screenWidth / 4, screenWidth / 4).apply {
+                layoutManager = this
+            }
 
 
         snapHelper = LinearSnapHelper()

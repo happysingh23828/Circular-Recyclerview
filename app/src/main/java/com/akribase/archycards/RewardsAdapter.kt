@@ -11,20 +11,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.akribase.archycards.databinding.ItemViewBinding
 
 class RewardsAdapter(
-    private val rewards: List<Int>,
-    val itemWidth: Int,
-    val itemHeight: Int
+    private val rewards: List<Int>
 ) : RecyclerView.Adapter<RewardsAdapter.RewardsHolder>() {
 
     @SuppressLint("ClickableViewAccessibility")
     inner class RewardsHolder(private val binding: ItemViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        init {
-        }
-
         fun bind(id: Int) {
             binding.imageView.setImageDrawable(ContextCompat.getDrawable(itemView.context, id))
+            binding.imageView.setCircleBackgroundColorResource(getCircleBorderColor())
+        }
+
+        private fun getCircleBorderColor(): Int {
+            return when (adapterPosition % 6) {
+                1 -> R.color.p1
+                2 -> R.color.p2
+                3 -> R.color.p3
+                4 -> R.color.p4
+                5 -> R.color.p5
+                else -> R.color.p6
+            }
         }
     }
 

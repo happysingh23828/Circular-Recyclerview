@@ -14,7 +14,9 @@
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/rect_border.xml" value="0.2435" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_circular_view.xml" value="0.4083333333333333" />
         <entry key="app/src/main/res/layout/item_view.xml" value="0.6864406779661016" />
+        <entry key="app/src/main/res/layout/layout_circular_view.xml" value="0.4083333333333333" />
       </map>
     </option>
   </component>

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.akribase.archycards.circular_recyclerview.CircularRecyclerView
 import com.akribase.archycards.databinding.ActivityMainBinding
 
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         initRv(binding.rv)
     }
 
-    private fun initRv(rv: RecyclerView) {
+    private fun initRv(rv: CircularRecyclerView) {
         val rewards = listOf(
             R.drawable.p0,
             R.drawable.p1,
@@ -42,33 +43,19 @@ class MainActivity : AppCompatActivity() {
             R.drawable.p3,
         )
 
-        setArcLayoutManager()
-//        setArcLayoutManager2()
-        rv.adapter = RewardsAdapter(rewards)
+        val listOfItems = rewards.mapIndexed { index, i ->
+            CircularRecyclerView.Item(
+                id = index.toString(),
+                imageUrl = "sdsd",
+                borderColor = R.color.p1
+            )
+        }
 
-        snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(rv)
-
-        val snapOnScrollListener = SnapOnScrollListener(snapHelper)
-        rv.addOnScrollListener(snapOnScrollListener)
-
+        rv.createItems(listOfItems)
 
         binding.btnScroll.setOnClickListener {
-            rv.smoothScrollBy(10000, 0, AccelerateDecelerateInterpolator(), 7000)
+            binding.rv.animateAndSelectItem(5, 7000)
         }
-    }
-
-    private fun setArcLayoutManager() {
-        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        binding.rv.layoutManager =
-            ArcLayoutManager(resources, screenWidth).apply {
-                layoutManager = this
-            }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.rv.smoothScrollBy(1, 0)
     }
 
 }

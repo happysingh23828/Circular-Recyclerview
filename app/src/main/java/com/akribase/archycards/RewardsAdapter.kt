@@ -18,7 +18,8 @@ class RewardsAdapter(
 
         fun bind(id: Int) {
             binding.imageView.setImageDrawable(ContextCompat.getDrawable(itemView.context, id))
-            binding.imageView.setCircleBackgroundColorResource(getCircleBorderColor())
+            binding.imageView.borderColor =
+                ContextCompat.getColor(itemView.context, getCircleBorderColor())
             binding.position.backgroundTintList = ColorStateList.valueOf(getCircleBorderColor())
             binding.position.text = adapterPosition.toString()
             binding.root.setOnClickListener {

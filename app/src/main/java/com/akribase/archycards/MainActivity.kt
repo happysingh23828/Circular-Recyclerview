@@ -1,12 +1,11 @@
 package com.akribase.archycards
 
-import android.content.res.Resources
 import android.os.Bundle
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.akribase.archycards.circular_recyclerview.ArcLayoutManager
 import com.akribase.archycards.circular_recyclerview.CircularRecyclerView
 import com.akribase.archycards.databinding.ActivityMainBinding
 
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         rv.createItems(listOfItems)
 
         binding.btnScroll.setOnClickListener {
-            binding.rv.animateAndSelectItem(5, 7000)
+            binding.rv.animateAndSelectItem(5, 4000)
         }
     }
 

@@ -1,10 +1,11 @@
-package com.akribase.archycards
+package com.akribase.archycards.circular_recyclerview
 
 import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.RecyclerView.*
+import com.akribase.archycards.R
 import kotlin.math.acos
 import kotlin.math.floor
 

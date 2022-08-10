@@ -1,6 +1,7 @@
 package com.akribase.archycards.circular_recyclerview
 
 import android.content.res.Resources
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.math.MathUtils
@@ -8,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView.*
 import com.akribase.archycards.R
 import kotlin.math.acos
 import kotlin.math.floor
+import kotlin.math.sin
 
 
 class ArcLayoutManager(resources: Resources, private val screenWidth: Int) : LayoutManager() {
 
     private val TAG = "CustomLayoutManager"
-    private var horizontalScrollOffset = 0
-
     private val viewWidth = resources.getDimensionPixelSize(R.dimen.item_width)
+    private var horizontalScrollOffset = viewWidth / 2
     private val recyclerViewHeight =
         (resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
 
@@ -54,7 +55,7 @@ class ArcLayoutManager(resources: Resources, private val screenWidth: Int) : Lay
         val right = left + viewWidth
         val top = getTopOffsetForView(left + viewWidth / 2)
         val bottom = top + viewWidth
-
+        Log.d(TAG, "layoutChildView: HorizontalScrollOffset $horizontalScrollOffset, ViewWidth $viewWidth, Top $top, bottom $bottom, left $left, right $right")
         measureChild(view, viewWidth, viewWidth)
 
         layoutDecorated(view, left, top, right, bottom)
@@ -68,7 +69,8 @@ class ArcLayoutManager(resources: Resources, private val screenWidth: Int) : Lay
         val cosAlpha = (s - viewCentreX) / radius
         val alpha = acos(MathUtils.clamp(cosAlpha, -1.0, 1.0))
 
-        val yComponent = radius - (radius * Math.sin(alpha))
+        val yComponent = radius - (radius * sin(alpha))
+        Log.d(TAG, "\n\n\ngetTopOffsetForView: s $s, h $h, radius $radius, \ncosAlpha $cosAlpha, Alpha $alpha, yComponent $yComponent")
         return yComponent.toInt()
     }
 

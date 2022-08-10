@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -907,8 +908,8 @@ public class WheelView extends View {
                 setAngle((Float) valueAnimator.getAnimatedValue());
             }
         });
-        valueAnimator.setDuration(2000);//animation duration
-        valueAnimator.setInterpolator(new FastOutSlowInInterpolator());//animation duration
+        valueAnimator.setDuration(15000);//animation duration
+        valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());//animation duration
         valueAnimator.start();
     }
 

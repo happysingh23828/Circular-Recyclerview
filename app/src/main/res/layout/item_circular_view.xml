@@ -6,8 +6,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/item_width"
+        android:layout_height="@dimen/item_width"
         android:src="@drawable/p0"
         app:civ_border_overlay="false"
         app:civ_border_width="4dp"

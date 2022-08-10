@@ -1,5 +1,6 @@
 package com.akribase.archycards
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -55,6 +56,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnScroll.setOnClickListener {
             binding.rv.animateAndSelectItem(5, 4000)
         }
+
+
+
+        startActivity(Intent(this, WheelActivity::class.java))
     }
 
 }

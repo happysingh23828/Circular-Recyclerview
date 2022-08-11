@@ -1,43 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#020415"
     tools:context=".WheelActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnMatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/find_a_match"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        android:text="@string/find_a_match" />
 
     <com.akribase.archycards.wheelview.WheelView
         android:id="@+id/wheelview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:emptyItemColor="@color/teal_200"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:repeatItems="true"
         app:rotatable="true"
         app:rotatableWheelDrawable="false"
         app:selectionAngle="90.0"
         app:selectionColor="@null"
         app:selectionPadding="0dp"
-        app:wheelColor="@android:color/white"
+        app:wheelColor="#020415"
         app:wheelItemCount="14"
-        app:wheelItemRadius="45dp"
+        app:wheelItemRadius="55dp"
         app:wheelItemTransformer="com.akribase.archycards.wheelview.transformer.SimpleItemTransformer"
-        app:wheelOffsetY="60dp"
-        app:wheelPadding="13dp"
+        app:wheelOffsetY="120dp"
+        app:wheelPadding="20dp"
         app:wheelPosition="bottom"
-        app:wheelRadius="276dp" />
+        app:wheelRadius="350dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -899,18 +899,22 @@ public class WheelView extends View {
      *
      * @param rawPosition the raw position (can take negative numbers)
      */
-    public void setSelected(int rawPosition) {
-        //must rotate the wheel in the opposite direction so that the given position becomes selected
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(-1f * getAngleForPosition(mRawSelectedPosition), (-1f * getAngleForPosition(rawPosition)));
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                setAngle((Float) valueAnimator.getAnimatedValue());
-            }
-        });
-        valueAnimator.setDuration(15000);//animation duration
-        valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());//animation duration
-        valueAnimator.start();
+    public void setSelected(int rawPosition, boolean isAnimate) {
+        if (isAnimate) {
+            //must rotate the wheel in the opposite direction so that the given position becomes selected
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(-1f * getAngleForPosition(mRawSelectedPosition), (-1f * getAngleForPosition(rawPosition)));
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    setAngle((Float) valueAnimator.getAnimatedValue());
+                }
+            });
+            valueAnimator.setDuration(10000);//animation duration
+            valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());//animation duration
+            valueAnimator.start();
+        } else {
+            setAngle(-1f * getAngleForPosition(rawPosition));
+        }
     }
 
     /**

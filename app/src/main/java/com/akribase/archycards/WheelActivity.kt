@@ -29,12 +29,13 @@ class WheelActivity : AppCompatActivity() {
         //create data for the adapter
 
         //create data for the adapter
-        val entries: MutableList<WheelData> = ArrayList(90)
+        val entries: MutableList<WheelData> = ArrayList(150)
         for (i in 0 until 100) {
+            val data = getDataForPosition(i)
             entries.add(
                 WheelData(
-                    borderHex = "#FFD953",
-                    imageUrl = "https://picsum.photos/200/200"
+                    borderHex = data.first,
+                    imageUrl = data.second
                 )
             )
         }
@@ -42,8 +43,17 @@ class WheelActivity : AppCompatActivity() {
         binding.wheelview.adapter = WheelListAdapter(entries, this)
 
         binding.btnMatch.setOnClickListener {
-//            binding.wheelview.adapter = WheelListAdapter(entries, this)
-            binding.wheelview.setSelected(30)
+            binding.wheelview.setSelected(50, true)
+        }
+    }
+
+
+    private fun getDataForPosition(position: Int): Pair<String, Int> {
+        return when (position % 4) {
+            1 -> Pair("#0CB1B1", R.drawable.p0)
+            2 -> Pair("#FFD953", R.drawable.p1)
+            3 -> Pair("#34A4FF", R.drawable.p2)
+            else -> Pair("#FFD953", R.drawable.p3)
         }
     }
 }
@@ -66,7 +76,8 @@ class WheelListAdapter(list: List<WheelData?>?, private val context: Context) :
 
         val data = getItem(position) as WheelData
 
-        Glide.with(context).load(data.imageUrl).into(holder!!.avatar!!)
+//        Glide.with(context).load(data.imageUrl).into(holder!!.avatar!!)
+        holder!!.avatar!!.setImageDrawable(context.getDrawable(data.imageUrl))
         holder!!.avatar!!.borderColor = Color.parseColor(data.borderHex)
         convertView!!.isDrawingCacheEnabled = true
         convertView.measure(
@@ -94,5 +105,5 @@ class WheelListAdapter(list: List<WheelData?>?, private val context: Context) :
 
 data class WheelData(
     val borderHex: String,
-    val imageUrl: String
+    val imageUrl: Int
 )

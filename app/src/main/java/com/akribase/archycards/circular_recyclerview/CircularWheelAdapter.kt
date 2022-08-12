@@ -31,12 +31,11 @@ class CircularWheelAdapter(list: List<CircularRecyclerView.Item?>, private val c
 
         val data = getItem(position) as CircularRecyclerView.Item
 
-        /*try {
+        try {
             Glide.with(context).load(data.imageUrl).into(holder!!.avatar!!)
-        } catch (ex : Exception) {
+        } catch (ex: Exception) {
             holder!!.avatar!!.setImageDrawable(context.getDrawable(R.drawable.p0))
-        }*/
-        holder!!.avatar!!.setImageDrawable(context.getDrawable(R.drawable.p0))
+        }
         holder!!.avatar!!.borderColor = context.resources.getColor(data.borderColor)
         convertView!!.isDrawingCacheEnabled = true
         convertView.measure(

@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             listOfItems.add(
                 CircularRecyclerView.Item(
                     borderColor = R.color.teal_200,
-                    imageUrl = "",
+                    imageUrl = "https://onlinepngtools.com/images/examples-onlinepngtools/fir-trees.png",
                     id = i.toString()
                 )
             )

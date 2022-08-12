@@ -58,7 +58,7 @@ class WheelActivity : AppCompatActivity() {
     }
 }
 
-class WheelListAdapter(list: List<WheelData?>?, private val context: Context) :
+class WheelListAdapter(list: List<WheelData?>, private val context: Context) :
     WheelArrayAdapter<WheelData?>(list) {
     var holder: ViewHolder? = null
     private val myInflater: LayoutInflater = LayoutInflater.from(context)

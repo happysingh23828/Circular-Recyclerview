@@ -16,8 +16,6 @@ class CircularRecyclerView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     var binding: LayoutCircularViewBinding
-    private var adapter = CircularRecyclerAdapter()
-    private lateinit var snapHelper: LinearSnapHelper
 
     init {
         binding = LayoutCircularViewBinding.inflate(LayoutInflater.from(context), this)
@@ -25,34 +23,24 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     private fun initRecyclerview() {
-        binding.rv.post {
-            val screenWidth = binding.root.width
-            binding.rv.layoutManager = ArcLayoutManager(resources, screenWidth)
-            snapHelper = LinearSnapHelper()
-            snapHelper.attachToRecyclerView(binding.rv)
-            val snapOnScrollListener = SnapOnScrollListener(snapHelper)
-            binding.rv.addOnScrollListener(snapOnScrollListener)
-            binding.rv.adapter = adapter
-        }
+
     }
 
     fun createItems(listOfItems: List<Item>) {
-        adapter.updateList(listOfItems.toMutableList())
+        binding.wheelView.adapter = CircularWheelAdapter(listOfItems, context)
     }
 
     fun appendItems(listOfItems: List<Item>) {
-        adapter.appendList(listOfItems.toMutableList())
+        binding.wheelView.adapter = CircularWheelAdapter(listOfItems, context)
     }
 
     fun animateAndSelectItem(position: Int, duration: Int) {
-        // TODO calculate dX for position to add smooth Scroll
-        binding.rv.smoothScrollBy(2000, 0, AccelerateDecelerateInterpolator(), duration)
+        binding.wheelView.setSelected(position, true)
     }
-
 
     data class Item(
         val id: String,
-        @ColorRes val borderColor: Int,
+        val borderColor: Int,
         val imageUrl: String
     )
 }

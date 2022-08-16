@@ -9,11 +9,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:text="@string/scroll"
+        android:text="Start Scroll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnStopScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Scroll"
+        app:layout_constraintBottom_toBottomOf="@+id/btnScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnScroll"
+        app:layout_constraintTop_toTopOf="@+id/btnScroll" />
 
     <com.akribase.archycards.circular_recyclerview.CircularRecyclerView
         android:id="@+id/rv"

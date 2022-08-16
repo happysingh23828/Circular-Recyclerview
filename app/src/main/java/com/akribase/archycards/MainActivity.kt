@@ -49,7 +49,11 @@ class MainActivity : AppCompatActivity() {
         }
         binding.rv.createItems(listOfItems)
         binding.btnScroll.setOnClickListener {
-            binding.rv.animateAndSelectItem(60, 4000)
+            binding.rv.startAutoScroll()
+        }
+
+        binding.btnStopScroll.setOnClickListener {
+            binding.rv.stopAutoScroll()
         }
     }
 

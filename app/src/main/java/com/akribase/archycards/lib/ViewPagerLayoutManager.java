@@ -233,14 +233,6 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
                 this.mOffset = 0.0F;
             } else {
                 this.measureChildWithMargins(scrap, 0, 0);
-                this.mDecoratedMeasurement = this.mOrientationHelper.getDecoratedMeasurement(scrap);
-                this.mDecoratedMeasurementInOther = this.mOrientationHelper.getDecoratedMeasurementInOther(scrap);
-                this.mSpaceMain = (this.mOrientationHelper.getTotalSpace() - this.mDecoratedMeasurement) / 2;
-                if (this.mDistanceToBottom == 2147483647) {
-                    this.mSpaceInOther = (this.mOrientationHelper.getTotalSpaceInOther() - this.mDecoratedMeasurementInOther) / 2;
-                } else {
-                    this.mSpaceInOther = this.mOrientationHelper.getTotalSpaceInOther() - this.mDecoratedMeasurementInOther - this.mDistanceToBottom;
-                }
 
                 this.mInterval = this.setInterval();
                 this.setUp();
@@ -264,6 +256,17 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
                 this.layoutItems(recycler);
             }
+        }
+    }
+
+    private void calChildSpaceAndSpace(View scrap) {
+        mDecoratedMeasurement = mOrientationHelper.getDecoratedMeasurement(scrap);
+        mDecoratedMeasurementInOther = mOrientationHelper.getDecoratedMeasurementInOther(scrap);
+        mSpaceMain = (mOrientationHelper.getTotalSpace() - mDecoratedMeasurement) / 2;
+        if (mDistanceToBottom == INVALID_SIZE) {
+            mSpaceInOther = (mOrientationHelper.getTotalSpaceInOther() - mDecoratedMeasurementInOther) / 2;
+        } else {
+            mSpaceInOther = mOrientationHelper.getTotalSpaceInOther() - mDecoratedMeasurementInOther - mDistanceToBottom;
         }
     }
 
@@ -542,6 +545,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
     private void layoutScrap(View scrap, float targetOffset) {
         int left = this.calItemLeft(scrap, targetOffset);
         int top = this.calItemTop(scrap, targetOffset);
+        calChildSpaceAndSpace(scrap);
         if (this.mOrientation == 1) {
             this.layoutDecorated(scrap, this.mSpaceInOther + left, this.mSpaceMain + top, this.mSpaceInOther + left + this.mDecoratedMeasurementInOther, this.mSpaceMain + top + this.mDecoratedMeasurement);
         } else {

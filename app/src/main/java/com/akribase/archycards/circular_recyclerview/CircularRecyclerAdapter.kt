@@ -48,7 +48,7 @@ class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.Cir
 
 
         fun bind(circularItem: CircularRecyclerView.Item) {
-            // TODO setLayout
+            binding.imageView.setImageDrawable(binding.root.context.getDrawable(circularItem.imageUrl))
         }
     }
 

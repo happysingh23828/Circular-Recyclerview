@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val listOfItems = rewards.mapIndexed { index, i ->
             CircularRecyclerView.Item(
                 id = index.toString(),
-                imageUrl = "sdsd",
+                imageUrl = i,
                 borderColor = R.color.p1
             )
         }

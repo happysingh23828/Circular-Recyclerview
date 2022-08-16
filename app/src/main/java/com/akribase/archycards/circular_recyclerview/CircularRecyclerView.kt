@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.akribase.archycards.databinding.LayoutCircularViewBinding
 import com.akribase.archycards.lib.CircleScaleLayoutManager
@@ -42,9 +43,8 @@ class CircularRecyclerView @JvmOverloads constructor(
         val screenWidth = binding.root.width
         layoutManager = CircleScaleLayoutManager
             .Builder(context)
-            .setRadius(screenWidth / 2)
-            .setCenterScale(1f)
-            .setMaxVisibleItemCount(5)
+            .setRadius((screenWidth / 1.50).toInt())
+            .setMaxVisibleItemCount(6)
             .build()
         layoutManager.setItemRotation(false)
         layoutManager.infinite = true
@@ -60,14 +60,14 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     fun animateAndSelectItem(position: Int, duration: Int) {
-        layoutManager.setSmoothScrollInterpolator(AccelerateDecelerateInterpolator())
+        layoutManager.setSmoothScrollInterpolator(FastOutSlowInInterpolator())
         binding.rv.smoothScrollToPosition(position)
     }
 
     data class Item(
         val id: String,
         @ColorRes val borderColor: Int,
-        val imageUrl: String
+        val imageUrl: Int
     )
 }
 

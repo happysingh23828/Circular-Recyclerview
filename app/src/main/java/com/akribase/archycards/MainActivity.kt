@@ -11,6 +11,8 @@ import com.akribase.archycards.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private val itemIndexToMatch = 23
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -38,11 +40,16 @@ class MainActivity : AppCompatActivity() {
         );
 
         val listOfItems = mutableListOf<CircularRecyclerView.Item>()
-        for (i in 0..100) {
+        for (i in 0..50) {
+            val imageUrl = if (itemIndexToMatch == i) {
+                "https://avatars.githubusercontent.com/u/26920113?v=4"
+            } else {
+                "https://picsum.photos/id/${arrayOfPhotos[i.rem(10)]}/300/300"
+            }
             listOfItems.add(
                 CircularRecyclerView.Item(
                     borderColor = R.color.teal_200,
-                    imageUrl = "https://picsum.photos/id/${arrayOfPhotos[i.rem(10)]}/300/300",
+                    imageUrl = imageUrl,
                     id = i.toString()
                 )
             )
@@ -58,6 +65,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnAddScroll.setOnClickListener {
             binding.rv.appendItems(listOfItems)
+        }
+
+        binding.btnFindScroll.setOnClickListener {
+            binding.rv.animateAndSelectItem(itemIndexToMatch)
         }
     }
 

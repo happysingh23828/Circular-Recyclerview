@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.CycleInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -25,7 +26,7 @@ class CircularRecyclerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), DefaultLifecycleObserver {
 
-    var binding: LayoutCircularViewBinding
+    private var binding: LayoutCircularViewBinding
     private var adapter = CircularRecyclerAdapter()
     private lateinit var snapHelper: CenterSnapHelper
     private lateinit var layoutManager: ViewPagerLayoutManager
@@ -35,15 +36,10 @@ class CircularRecyclerView @JvmOverloads constructor(
         initRecyclerview()
     }
 
-    fun registerLifecycleOwner(lifecycle: Lifecycle) {
-        lifecycle.addObserver(this)
-    }
-
     private fun initRecyclerview() {
         binding.rv.post {
             setLayoutManager()
             snapHelper = CenterSnapHelper()
-            setPageChangeListener()
             snapHelper.attachToRecyclerView(binding.rv)
             binding.rv.adapter = adapter
         }
@@ -54,11 +50,16 @@ class CircularRecyclerView @JvmOverloads constructor(
         layoutManager = CircleScaleLayoutManager
             .Builder(context)
             .setRadius((screenWidth / 1.50).toInt())
-            .setMaxVisibleItemCount(6)
+            .setReverseLayout(true)
+            .setMaxVisibleItemCount(MAX_VISIBLE_ITEMS_COUNT)
             .build()
         layoutManager.setItemRotation(false)
         layoutManager.infinite = true
         binding.rv.layoutManager = layoutManager
+    }
+
+    fun registerLifecycleOwner(lifecycle: Lifecycle) {
+        lifecycle.addObserver(this)
     }
 
     fun createItems(listOfItems: List<Item>) {
@@ -69,22 +70,12 @@ class CircularRecyclerView @JvmOverloads constructor(
         adapter.appendList(listOfItems.toMutableList())
     }
 
-    fun animateAndSelectItem(position: Int, duration: Int) {
-        ScrollHelper.smoothScrollToPosition(
-            binding.rv,
-            layoutManager,
-            position,
-            AccelerateDecelerateInterpolator(),
-            duration
-        )
-    }
-
-    data class Item(
-        val id: String,
-        val borderColor: Int,
-        val imageUrl: String
-    )
-
+    /**
+     * Scrolling methods
+     * [startAutoScroll] for starting infinite scrolling
+     * [stopAutoScroll] for stopping infinite scrolling
+     * [animateAndSelectItem] for selecting particular index and scroll to it.
+     */
     private var isAutoScrolling = false
 
     private var autoScrollJob: Job? = null
@@ -112,30 +103,58 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     fun stopAutoScroll() {
-        // reset auto scroll
         isAutoScrolling = false
         autoScrollJob?.cancel()
     }
 
-    private fun setPageChangeListener() {
-        layoutManager.setOnPageChangeListener(object : ViewPagerLayoutManager.OnPageChangeListener {
-            override fun onPageSelected(var1: Int) {
-                Log.d(CircularRecyclerView::class.java.name, "onPageSelected: $var1")
-            }
+    fun animateAndSelectItem(position: Int) {
+        stopAutoScroll()
 
-            override fun onPageScrollStateChanged(var1: Int) {
-                Log.d(CircularRecyclerView::class.java.name, "onPageScrollStateChanged: $var1")
-            }
-        })
+        var targetPosition = layoutManager.currentPosition + INDEX_OFFSET_FOR_FINDING
+
+
+        if (targetPosition >= layoutManager.itemCount) {
+            targetPosition = INDEX_OFFSET_FOR_FINDING
+        }
+
+        adapter.updateItemOnList(position, targetPosition)
+
+        ScrollHelper.smoothScrollToPosition(
+            binding.rv,
+            layoutManager,
+            targetPosition,
+            DecelerateInterpolator(),
+            getScrollDurationForIndexOffsetForFinding()
+        )
     }
+
 
     override fun onDestroy(owner: LifecycleOwner) {
         stopAutoScroll()
         super.onDestroy(owner)
     }
 
+    /**
+     * Utils
+     */
+    private fun getScrollXDurationForFullScreenWidth(): Int {
+        return AUTO_SCROLL_MILLIS.toInt() + 1300
+    }
+
+    private fun getScrollDurationForIndexOffsetForFinding(): Int {
+        return getScrollXDurationForFullScreenWidth() * MAX_VISIBLE_ITEMS_COUNT - 1
+    }
+
+    data class Item(
+        val id: String,
+        val borderColor: Int,
+        val imageUrl: String
+    )
+
     companion object {
         private const val AUTO_SCROLL_MILLIS = 100L // scroll x offset in n mills
+        private const val MAX_VISIBLE_ITEMS_COUNT = 6 // scroll x offset in n mills
+        private const val INDEX_OFFSET_FOR_FINDING = 20 // scroll x offset in n mills
     }
 }
 

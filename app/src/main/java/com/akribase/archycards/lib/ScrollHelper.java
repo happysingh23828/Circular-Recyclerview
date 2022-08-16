@@ -5,6 +5,7 @@ package com.akribase.archycards.lib;
 // (powered by FernFlower decompiler)
 //
 
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
 
@@ -28,6 +29,7 @@ public class ScrollHelper {
 
     public static void smoothScrollToPosition(RecyclerView recyclerView, ViewPagerLayoutManager viewPagerLayoutManager, int targetPosition, Interpolator interpolator, int duration) {
         int delta = viewPagerLayoutManager.getOffsetToPosition(targetPosition);
+        Log.d(ScrollHelper.class.getName(), "smoothScrollToPosition: Offset Delta " + delta + " Position " + targetPosition);
         if (viewPagerLayoutManager.getOrientation() == 1) {
             recyclerView.smoothScrollBy(0, delta, interpolator, duration);
         } else {

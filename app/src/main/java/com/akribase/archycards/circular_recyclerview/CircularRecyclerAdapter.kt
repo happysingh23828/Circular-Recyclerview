@@ -24,6 +24,12 @@ class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.Cir
         notifyDataSetChanged()
     }
 
+    fun updateItemOnList(selectedPosition: Int, targetPosition: Int) {
+        val itemToReplace = listOfItems[selectedPosition]
+        this.listOfItems[targetPosition] = itemToReplace
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircularViewHolder {
         return CircularViewHolder(
             ItemCircularViewBinding.inflate(

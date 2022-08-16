@@ -117,6 +117,10 @@ class CircularRecyclerView @JvmOverloads constructor(
             targetPosition = INDEX_OFFSET_FOR_FINDING
         }
 
+        Log.d(
+            CircularRecyclerView::class.java.name,
+            "animateAndSelectItem: Current Position = ${layoutManager.currentPosition},  Target Position  = ${layoutManager.currentPosition + INDEX_OFFSET_FOR_FINDING}, Actual Position = $targetPosition"
+        )
         adapter.updateItemOnList(position, targetPosition)
 
         ScrollHelper.smoothScrollToPosition(
@@ -142,7 +146,7 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     private fun getScrollDurationForIndexOffsetForFinding(): Int {
-        return getScrollXDurationForFullScreenWidth() * MAX_VISIBLE_ITEMS_COUNT - 1
+        return getScrollXDurationForFullScreenWidth() * 2 - 1
     }
 
     data class Item(
@@ -154,7 +158,7 @@ class CircularRecyclerView @JvmOverloads constructor(
     companion object {
         private const val AUTO_SCROLL_MILLIS = 100L // scroll x offset in n mills
         private const val MAX_VISIBLE_ITEMS_COUNT = 6 // scroll x offset in n mills
-        private const val INDEX_OFFSET_FOR_FINDING = 20 // scroll x offset in n mills
+        private const val INDEX_OFFSET_FOR_FINDING = 10 // scroll x offset in n mills
     }
 }
 

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         rv.createItems(listOfItems)
 
         binding.btnScroll.setOnClickListener {
-            binding.rv.animateAndSelectItem(5, 4000)
+            binding.rv.animateAndSelectItem(15, 4000)
         }
     }
 

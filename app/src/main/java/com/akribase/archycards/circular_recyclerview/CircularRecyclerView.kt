@@ -8,6 +8,8 @@ import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.akribase.archycards.databinding.LayoutCircularViewBinding
+import com.akribase.archycards.lib.CircleScaleLayoutManager
+import com.akribase.archycards.lib.ViewPagerLayoutManager
 
 class CircularRecyclerView @JvmOverloads constructor(
     context: Context,
@@ -18,6 +20,7 @@ class CircularRecyclerView @JvmOverloads constructor(
     var binding: LayoutCircularViewBinding
     private var adapter = CircularRecyclerAdapter()
     private lateinit var snapHelper: LinearSnapHelper
+    private lateinit var layoutManager: ViewPagerLayoutManager
 
     init {
         binding = LayoutCircularViewBinding.inflate(LayoutInflater.from(context), this)
@@ -26,14 +29,24 @@ class CircularRecyclerView @JvmOverloads constructor(
 
     private fun initRecyclerview() {
         binding.rv.post {
-            val screenWidth = binding.root.width
-            binding.rv.layoutManager = ArcLayoutManager(resources, screenWidth)
+            setLayoutManager()
             snapHelper = LinearSnapHelper()
             snapHelper.attachToRecyclerView(binding.rv)
             val snapOnScrollListener = SnapOnScrollListener(snapHelper)
             binding.rv.addOnScrollListener(snapOnScrollListener)
             binding.rv.adapter = adapter
         }
+    }
+
+    private fun setLayoutManager() {
+        val screenWidth = binding.root.width
+        layoutManager = CircleScaleLayoutManager
+            .Builder(context)
+            .setRadius(screenWidth / 2)
+            .setCenterScale(1f)
+            .setMaxVisibleItemCount(5)
+            .build()
+        binding.rv.layoutManager = layoutManager
     }
 
     fun createItems(listOfItems: List<Item>) {
@@ -45,10 +58,9 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     fun animateAndSelectItem(position: Int, duration: Int) {
-        // TODO calculate dX for position to add smooth Scroll
-        binding.rv.smoothScrollBy(2000, 0, AccelerateDecelerateInterpolator(), duration)
+        layoutManager.setSmoothScrollInterpolator(AccelerateDecelerateInterpolator())
+        binding.rv.smoothScrollToPosition(position)
     }
-
 
     data class Item(
         val id: String,

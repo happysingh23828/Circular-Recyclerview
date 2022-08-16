@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRv(rv: CircularRecyclerView) {
-
+        binding.rv.registerLifecycleOwner(lifecycle)
         val arrayOfPhotos = arrayListOf(
             237,
             433,
@@ -48,16 +48,9 @@ class MainActivity : AppCompatActivity() {
             )
         }
         binding.rv.createItems(listOfItems)
-        rv.createItems(listOfItems)
         binding.btnScroll.setOnClickListener {
             binding.rv.animateAndSelectItem(60, 4000)
         }
     }
 
-}
-
-fun SnapHelper.getSnapPosition(recyclerView: RecyclerView): Int {
-    val layoutManager = recyclerView.layoutManager ?: return RecyclerView.NO_POSITION
-    val snapView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
-    return layoutManager.getPosition(snapView)
 }

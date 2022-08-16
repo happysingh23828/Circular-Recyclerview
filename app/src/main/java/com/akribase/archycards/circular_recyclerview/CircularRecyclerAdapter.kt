@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.akribase.archycards.databinding.ItemCircularViewBinding
-import com.akribase.archycards.getSnapPosition
 import com.bumptech.glide.Glide
 
 class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.CircularViewHolder>() {

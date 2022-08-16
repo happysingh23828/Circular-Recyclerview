@@ -4,19 +4,21 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.AccelerateDecelerateInterpolator
-import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.akribase.archycards.databinding.LayoutCircularViewBinding
 import com.akribase.archycards.lib.CircleScaleLayoutManager
+import com.akribase.archycards.lib.ScrollHelper
 import com.akribase.archycards.lib.ViewPagerLayoutManager
 
 class CircularRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr), DefaultLifecycleObserver {
 
     var binding: LayoutCircularViewBinding
     private var adapter = CircularRecyclerAdapter()
@@ -26,6 +28,10 @@ class CircularRecyclerView @JvmOverloads constructor(
     init {
         binding = LayoutCircularViewBinding.inflate(LayoutInflater.from(context), this)
         initRecyclerview()
+    }
+
+    fun registerLifecycleOwner(lifecycle: Lifecycle) {
+        lifecycle.addObserver(this)
     }
 
     private fun initRecyclerview() {
@@ -60,8 +66,27 @@ class CircularRecyclerView @JvmOverloads constructor(
     }
 
     fun animateAndSelectItem(position: Int, duration: Int) {
-        layoutManager.setSmoothScrollInterpolator(FastOutSlowInInterpolator())
-        binding.rv.smoothScrollToPosition(position)
+        ScrollHelper.smoothScrollToPosition(
+            binding.rv,
+            layoutManager,
+            position,
+            AccelerateDecelerateInterpolator(),
+            duration
+        )
+    }
+
+    private var isAutoScrolling = false
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
     }
 
     data class Item(

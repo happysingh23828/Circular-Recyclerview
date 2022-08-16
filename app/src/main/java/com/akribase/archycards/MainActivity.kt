@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnStopScroll.setOnClickListener {
             binding.rv.stopAutoScroll()
         }
+
+        binding.btnAddScroll.setOnClickListener {
+            binding.rv.appendItems(listOfItems)
+        }
     }
 
 }

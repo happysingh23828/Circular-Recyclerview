@@ -47,6 +47,7 @@ class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.Cir
 
         fun bind(circularItem: CircularRecyclerView.Item) {
             Glide.with(binding.root.context).load(circularItem.imageUrl).into(binding.imageView)
+            binding.ivPosition.text = adapterPosition.toString()
         }
     }
 

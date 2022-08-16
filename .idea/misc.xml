@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.4441025641025641" />
         <entry key="..\:/Users/Dell/Desktop/Amit/Android_Projects/archycards/app/src/main/res/drawable/glow_rect.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/Dell/Desktop/Amit/Android_Projects/archycards/app/src/main/res/drawable/glow_rect_1.xml" value="0.18425925925925926" />
         <entry key="..\:/Users/Dell/Desktop/Amit/Android_Projects/archycards/app/src/main/res/drawable/ic_drag_base.xml" value="0.18489583333333334" />
@@ -14,7 +15,8 @@
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/rect_border.xml" value="0.2435" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_circular_view.xml" value="0.4083333333333333" />
+        <entry key="app/src/main/res/layout/activity_wheel_activity.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/layout/item_circular_view.xml" value="0.625" />
         <entry key="app/src/main/res/layout/item_view.xml" value="0.6864406779661016" />
         <entry key="app/src/main/res/layout/layout_circular_view.xml" value="0.4083333333333333" />
       </map>

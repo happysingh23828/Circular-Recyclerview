@@ -26,11 +26,20 @@
         app:layout_constraintStart_toEndOf="@+id/btnScroll"
         app:layout_constraintTop_toTopOf="@+id/btnScroll" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAddScroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Items"
+        app:layout_constraintBottom_toBottomOf="@+id/btnScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnScroll"
+        app:layout_constraintTop_toTopOf="@+id/btnScroll" />
+
     <com.akribase.archycards.circular_recyclerview.CircularRecyclerView
         android:id="@+id/rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

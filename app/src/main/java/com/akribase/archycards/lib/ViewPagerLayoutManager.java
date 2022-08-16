@@ -49,6 +49,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
     private Interpolator mSmoothScrollInterpolator;
     private int mDistanceToBottom;
     private View currentFocusView;
+    private boolean mItemRotationEnabled;
 
     protected abstract float setInterval();
 
@@ -73,6 +74,7 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
         this.mInfinite = false;
         this.mMaxVisibleItemCount = -1;
         this.mDistanceToBottom = 2147483647;
+        this.mItemRotationEnabled = true;
         this.setOrientation(orientation);
         this.setReverseLayout(reverseLayout);
         this.setAutoMeasureEnabled(true);
@@ -85,6 +87,10 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
 
     public boolean getRecycleChildrenOnDetach() {
         return this.mRecycleChildrenOnDetach;
+    }
+
+    public void setItemRotation(boolean enabled) {
+        this.mItemRotationEnabled = enabled;
     }
 
     public void setRecycleChildrenOnDetach(boolean recycleChildrenOnDetach) {
@@ -542,7 +548,9 @@ public abstract class ViewPagerLayoutManager extends LinearLayoutManager {
             this.layoutDecorated(scrap, this.mSpaceMain + left, this.mSpaceInOther + top, this.mSpaceMain + left + this.mDecoratedMeasurement, this.mSpaceInOther + top + this.mDecoratedMeasurementInOther);
         }
 
-        this.setItemViewProperty(scrap, targetOffset);
+        if (mItemRotationEnabled) {
+            this.setItemViewProperty(scrap, targetOffset);
+        }
     }
 
     protected int calItemLeft(View itemView, float targetOffset) {

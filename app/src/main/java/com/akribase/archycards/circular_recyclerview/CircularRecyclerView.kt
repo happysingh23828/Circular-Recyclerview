@@ -46,6 +46,7 @@ class CircularRecyclerView @JvmOverloads constructor(
             .setCenterScale(1f)
             .setMaxVisibleItemCount(5)
             .build()
+        layoutManager.setItemRotation(false)
         binding.rv.layoutManager = layoutManager
     }
 

@@ -66,9 +66,8 @@ class CircularRecyclerView @JvmOverloads constructor(
 
     data class Item(
         val id: String,
-        @ColorRes val borderColor: Int,
-        val imageUrl: Int
+        val borderColor: Int,
+        val imageUrl: String
     )
 }
-
 

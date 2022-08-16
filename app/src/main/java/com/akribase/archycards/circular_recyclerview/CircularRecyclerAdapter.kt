@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.akribase.archycards.databinding.ItemCircularViewBinding
 import com.akribase.archycards.getSnapPosition
-
+import com.bumptech.glide.Glide
 
 class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.CircularViewHolder>() {
 
@@ -46,9 +46,8 @@ class CircularRecyclerAdapter : RecyclerView.Adapter<CircularRecyclerAdapter.Cir
     inner class CircularViewHolder(private val binding: ItemCircularViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         fun bind(circularItem: CircularRecyclerView.Item) {
-            binding.imageView.setImageDrawable(binding.root.context.getDrawable(circularItem.imageUrl))
+            Glide.with(binding.root.context).load(circularItem.imageUrl).into(binding.imageView)
         }
     }
 
@@ -75,4 +74,10 @@ class SnapOnScrollListener(
             rvSnapPos.value = snapPosition
         }
     }
+}
+
+fun SnapHelper.getSnapPosition(recyclerView: RecyclerView): Int {
+    val layoutManager = recyclerView.layoutManager ?: return RecyclerView.NO_POSITION
+    val snapView = findSnapView(layoutManager) ?: return RecyclerView.NO_POSITION
+    return layoutManager.getPosition(snapView)
 }

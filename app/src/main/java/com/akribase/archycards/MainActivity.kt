@@ -2,17 +2,13 @@ package com.akribase.archycards
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.akribase.archycards.circular_recyclerview.ArcLayoutManager
 import com.akribase.archycards.circular_recyclerview.CircularRecyclerView
 import com.akribase.archycards.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var snapHelper: LinearSnapHelper
-    private lateinit var layoutManager: ArcLayoutManager
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,37 +19,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRv(rv: CircularRecyclerView) {
-        val rewards = listOf(
-            R.drawable.p0,
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p0,
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p0,
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p0,
-            R.drawable.p1,
-            R.drawable.p2,
-            R.drawable.p3,
-        )
 
-        val listOfItems = rewards.mapIndexed { index, i ->
-            CircularRecyclerView.Item(
-                id = index.toString(),
-                imageUrl = i,
-                borderColor = R.color.p1
+        val arrayOfPhotos = arrayListOf(
+            237,
+            433,
+            577,
+            582,
+            593,
+            659,
+            718,
+            783,
+            790,
+            837,
+            1024,
+            1025,
+            1074,
+            1084
+        );
+
+        val listOfItems = mutableListOf<CircularRecyclerView.Item>()
+        for (i in 0..100) {
+            listOfItems.add(
+                CircularRecyclerView.Item(
+                    borderColor = R.color.teal_200,
+                    imageUrl = "https://picsum.photos/id/${arrayOfPhotos[i.rem(10)]}/300/300",
+                    id = i.toString()
+                )
             )
         }
-
+        binding.rv.createItems(listOfItems)
         rv.createItems(listOfItems)
-
         binding.btnScroll.setOnClickListener {
-            binding.rv.animateAndSelectItem(15, 4000)
+            binding.rv.animateAndSelectItem(60, 4000)
         }
     }
 
